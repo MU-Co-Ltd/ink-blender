@@ -18,6 +18,14 @@
   #root {
     @apply w-screen h-screen font-serif;
   }
+
+  img {
+    @apply pointer-events-none;
+  }
+
+  img:where(a *) {
+    @apply pointer-events-auto;
+  }
 }
 
 @layer components {

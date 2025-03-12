@@ -11,10 +11,19 @@
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
+import { Route as BlendRouteImport } from './pages/blend/route'
 import { Route as IndexImport } from './pages/index'
 import { Route as BlendIndexImport } from './pages/blend/index'
+import { Route as BlendResultIndexImport } from './pages/blend/result/index'
+import { Route as BlendResultPreviewImport } from './pages/blend/result/preview'
 
 // Create/Update Routes
+
+const BlendRouteRoute = BlendRouteImport.update({
+  id: '/blend',
+  path: '/blend',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -23,9 +32,21 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const BlendIndexRoute = BlendIndexImport.update({
-  id: '/blend/',
-  path: '/blend/',
-  getParentRoute: () => rootRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlendRouteRoute,
+} as any)
+
+const BlendResultIndexRoute = BlendResultIndexImport.update({
+  id: '/result/',
+  path: '/result/',
+  getParentRoute: () => BlendRouteRoute,
+} as any)
+
+const BlendResultPreviewRoute = BlendResultPreviewImport.update({
+  id: '/result/preview',
+  path: '/result/preview',
+  getParentRoute: () => BlendRouteRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -39,51 +60,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/blend/': {
-      id: '/blend/'
+    '/blend': {
+      id: '/blend'
       path: '/blend'
       fullPath: '/blend'
-      preLoaderRoute: typeof BlendIndexImport
+      preLoaderRoute: typeof BlendRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/blend/': {
+      id: '/blend/'
+      path: '/'
+      fullPath: '/blend/'
+      preLoaderRoute: typeof BlendIndexImport
+      parentRoute: typeof BlendRouteImport
+    }
+    '/blend/result/preview': {
+      id: '/blend/result/preview'
+      path: '/result/preview'
+      fullPath: '/blend/result/preview'
+      preLoaderRoute: typeof BlendResultPreviewImport
+      parentRoute: typeof BlendRouteImport
+    }
+    '/blend/result/': {
+      id: '/blend/result/'
+      path: '/result'
+      fullPath: '/blend/result'
+      preLoaderRoute: typeof BlendResultIndexImport
+      parentRoute: typeof BlendRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface BlendRouteRouteChildren {
+  BlendIndexRoute: typeof BlendIndexRoute
+  BlendResultPreviewRoute: typeof BlendResultPreviewRoute
+  BlendResultIndexRoute: typeof BlendResultIndexRoute
+}
+
+const BlendRouteRouteChildren: BlendRouteRouteChildren = {
+  BlendIndexRoute: BlendIndexRoute,
+  BlendResultPreviewRoute: BlendResultPreviewRoute,
+  BlendResultIndexRoute: BlendResultIndexRoute,
+}
+
+const BlendRouteRouteWithChildren = BlendRouteRoute._addFileChildren(
+  BlendRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/blend': typeof BlendIndexRoute
+  '/blend': typeof BlendRouteRouteWithChildren
+  '/blend/': typeof BlendIndexRoute
+  '/blend/result/preview': typeof BlendResultPreviewRoute
+  '/blend/result': typeof BlendResultIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blend': typeof BlendIndexRoute
+  '/blend/result/preview': typeof BlendResultPreviewRoute
+  '/blend/result': typeof BlendResultIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/blend': typeof BlendRouteRouteWithChildren
   '/blend/': typeof BlendIndexRoute
+  '/blend/result/preview': typeof BlendResultPreviewRoute
+  '/blend/result/': typeof BlendResultIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blend'
+  fullPaths:
+    | '/'
+    | '/blend'
+    | '/blend/'
+    | '/blend/result/preview'
+    | '/blend/result'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blend'
-  id: '__root__' | '/' | '/blend/'
+  to: '/' | '/blend' | '/blend/result/preview' | '/blend/result'
+  id:
+    | '__root__'
+    | '/'
+    | '/blend'
+    | '/blend/'
+    | '/blend/result/preview'
+    | '/blend/result/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BlendIndexRoute: typeof BlendIndexRoute
+  BlendRouteRoute: typeof BlendRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BlendIndexRoute: BlendIndexRoute,
+  BlendRouteRoute: BlendRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +174,31 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/blend/"
+        "/blend"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/blend": {
+      "filePath": "blend/route.tsx",
+      "children": [
+        "/blend/",
+        "/blend/result/preview",
+        "/blend/result/"
+      ]
+    },
     "/blend/": {
-      "filePath": "blend/index.tsx"
+      "filePath": "blend/index.tsx",
+      "parent": "/blend"
+    },
+    "/blend/result/preview": {
+      "filePath": "blend/result/preview.tsx",
+      "parent": "/blend"
+    },
+    "/blend/result/": {
+      "filePath": "blend/result/index.tsx",
+      "parent": "/blend"
     }
   }
 }
