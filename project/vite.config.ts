@@ -13,9 +13,14 @@ export default defineConfig({
   plugins: [
     TanStackRouterVite({
       target: 'react',
-      routesDirectory: join(process.cwd(), './src/pages'),
+      routesDirectory: join(__dirname, './src/pages'),
     }),
     react(),
     tailwindcss(),
   ],
+  resolve: {
+    alias: {
+      '@': join(__dirname, './src'),
+    },
+  },
 })
