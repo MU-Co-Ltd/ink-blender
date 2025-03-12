@@ -1,0 +1,13 @@
+services:
+  ink-blender-node:
+    container_name: ink-blender-node__container
+    image: node:${NODE_VERSION:-22}
+    volumes:
+      - type: bind
+        source: "./project"
+        target: "/usr/src/app"
+    working_dir: "/usr/src/app"
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    tty: true
+    stdin_open: true

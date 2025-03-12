@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-zen-old-mincho: 'Zen Old Mincho', serif;
+
+  --font-serif: var(--font-zen-old-mincho);
+}
+
+@layer base {
+  body {
+    @apply size-full overflow-hidden;
+    background-image: url('./assets/bg-grid.png');
+    background-size: 1.25rem;
+    background-repeat: repeat;
+  }
+
+  #root {
+    @apply w-screen h-screen font-serif;
+  }
+
+  img {
+    @apply pointer-events-none;
+  }
+
+  img:where(a *) {
+    @apply pointer-events-auto;
+  }
+}
+
+@layer components {
+  .z-1 {
+    z-index: 1;
+  }
+
+  .-z-1 {
+    z-index: -1;
+  }
+}
