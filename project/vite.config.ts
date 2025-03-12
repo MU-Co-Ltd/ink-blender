@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import { join } from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -8,5 +10,12 @@ export default defineConfig({
     host: true,
     port: 3000,
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    TanStackRouterVite({
+      target: 'react',
+      routesDirectory: join(process.cwd(), './src/pages'),
+    }),
+    react(),
+    tailwindcss(),
+  ],
 })
