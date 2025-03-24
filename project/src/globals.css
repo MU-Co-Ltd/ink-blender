@@ -10,6 +10,8 @@
   --font-serif: var(--font-zen-old-mincho);
   /* Color */
   --color-theme-gray-primary: #d9d9d9;
+  --color-theme-gray-secondary: #ededed;
+  --color-theme-gray-tertiary: #7e7d7d;
 }
 
 @layer base {

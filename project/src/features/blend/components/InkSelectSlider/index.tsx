@@ -9,7 +9,7 @@ export default function InkSelectSlider() {
     <div className="ink-slider">
       <Swiper spaceBetween={0} slidesPerView={'auto'} centeredSlides loop>
         {COLORS.map(({ name, keywords, thumbnails }) => (
-          <SwiperSlide key={name}>
+          <SwiperSlide key={name} data-color-name={name}>
             {({ isActive }) => (
               <div className="grid items-center justify-center gap-6 min-h-80">
                 {isActive ? (
@@ -22,6 +22,7 @@ export default function InkSelectSlider() {
                           width="516"
                           height="353"
                           loading="lazy"
+                          className="drop-shadow-md"
                         />
                       </picture>
                     </div>
