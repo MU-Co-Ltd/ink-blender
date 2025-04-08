@@ -36,7 +36,7 @@ export const COLORS: TColor[] = [
       withSample: yellowWithSample,
       withOrnaments: yellowWithOrnaments,
     },
-    keywords: ['ゴールデンアワー'],
+    keywords: ['ゴールデンアワー', 'シトラスフルーツ'],
   },
   {
     hex: '#FF2A5F',
@@ -46,7 +46,7 @@ export const COLORS: TColor[] = [
       withSample: pinkWithSample,
       withOrnaments: pinkWithOrnaments,
     },
-    keywords: ['春宵の並木道'],
+    keywords: ['お誕生日のバルーン', '春宵の並木道'],
   },
   {
     hex: '#EF0014',
@@ -66,7 +66,7 @@ export const COLORS: TColor[] = [
       withSample: purpleWithSample,
       withOrnaments: purpleWithOrnaments,
     },
-    keywords: ['フィンランドのオーロラ'],
+    keywords: ['アメジストの標本', 'フィンランドのオーロラ'],
   },
   {
     hex: '#13CAE9',
@@ -76,7 +76,7 @@ export const COLORS: TColor[] = [
       withSample: lightBlueWithSample,
       withOrnaments: lightBlueWithOrnaments,
     },
-    keywords: ['プールサイド'],
+    keywords: ['プールサイド', '地中海の街並み'],
   },
   {
     hex: '#0156C1',
@@ -86,7 +86,7 @@ export const COLORS: TColor[] = [
       withSample: blueWithSample,
       withOrnaments: blueWithOrnaments,
     },
-    keywords: ['ウォーターフロント'],
+    keywords: ['海月のアクアリウム', 'ウォーターフロント'],
   },
   {
     hex: '#04B395',
@@ -106,7 +106,7 @@ export const COLORS: TColor[] = [
       withSample: ocherWithSample,
       withOrnaments: ocherWithOrnaments,
     },
-    keywords: ['カフェのコーヒー'],
+    keywords: ['カフェのコーヒー', 'オータム・リーブス'],
   },
   {
     hex: '#24140E',
@@ -116,6 +116,6 @@ export const COLORS: TColor[] = [
       withSample: lampBlackWithSample,
       withOrnaments: lampBlackWithOrnaments,
     },
-    keywords: ['ビンテージなカメラ'],
+    keywords: ['フィルムノワール', 'ビンテージなカメラ'],
   },
 ]

@@ -1,9 +1,9 @@
-import type { TColor } from '@/types'
+import type { TInk } from '@/types'
 import { createContext, Dispatch, SetStateAction, useContext } from 'react'
 
 interface SelectedInksContextType {
-  selectedInks: TColor[]
-  setSelectedInks: Dispatch<SetStateAction<TColor[]>>
+  selectedInks: TInk[]
+  setSelectedInks: Dispatch<SetStateAction<TInk[]>>
 }
 
 export const SelectedInksContext = createContext<SelectedInksContextType>({

@@ -8,3 +8,8 @@ export type TColor = {
   }
   keywords: string[]
 }
+
+export type TInk = {
+  color: TColor
+  amount: number
+}

@@ -20,7 +20,10 @@ function RouteComponent() {
         <ul className="grid grid-cols-4 gap-3 row-span-2">
           {Array.from({ length: MAX_INK_COUNT }).map((_, index) => (
             <li key={index}>
-              <SelectedInkCard order={index + 1} ink={selectedInks[index]} />
+              <SelectedInkCard
+                order={index + 1}
+                ink={selectedInks[index]}
+              />
             </li>
           ))}
         </ul>

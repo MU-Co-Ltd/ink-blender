@@ -46,20 +46,10 @@
 }
 
 .ink-slider .swiper {
+  @apply pt-5;
+
   .swiper-wrapper {
     @apply flex items-center;
-  }
-
-  .swiper-slide {
-    @apply px-5 w-60;
-  }
-
-  .swiper-slide:not(.swiper-slide-active) {
-    @apply z-0 opacity-85;
-  }
-
-  .swiper-slide-active {
-    @apply z-1 px-0 w-auto;
   }
 }
 

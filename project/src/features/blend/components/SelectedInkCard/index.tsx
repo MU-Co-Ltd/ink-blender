@@ -1,36 +1,36 @@
 import { Button } from '@/features/common/components/ui/button'
-import type { TColor } from '@/types'
-import { useState } from 'react'
+import type { TInk } from '@/types'
 import { useBlender } from '@/features/blend/hooks/use-blender'
 
 interface ComponentProps {
-  ink?: TColor
+  ink?: TInk
   order: number
 }
 
 export default function SelectedInkCard({ ink, order }: ComponentProps) {
-  const [drops, setDrops] = useState<number>(1)
-  const { removeInk } = useBlender()
+  const { decreaseInkAmount, increaseInkAmount, removeInk } = useBlender()
 
   const handleAddDrops = () => {
-    setDrops((prev) => prev + 1)
+    if (!ink) return
+    increaseInkAmount(ink.color)
   }
 
   const handleRemoveDrops = () => {
-    setDrops((prev) => (prev > 1 ? prev - 1 : prev))
+    if (!ink) return
+    decreaseInkAmount(ink.color)
   }
 
   return (
     <div className="border empty:border-dashed border-theme-gray-primary rounded-tr-2xl h-full grid grid-rows-[auto_1fr_auto] gap-3">
       {ink && (
         <>
-          <div className="flex justify-between">
-            <p className="px-5 py-0.5 bg-theme-gray-primary text-theme-gray-tertiary text-xs rounded-br-2xl">
-              <span className="text-base">{order}</span>色目
+          <div className="flex justify-between items-start">
+            <p className="px-5 py-2 bg-theme-gray-primary text-theme-gray-tertiary text-xs rounded-br-2xl">
+              <span className="text-base leading-none">{order}</span>色目
             </p>
             <Button
               className="text-theme-gray-primary bg-transparent"
-              onClick={() => removeInk(ink)}
+              onClick={() => removeInk(ink.color)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
           <div className="px-7">
             <picture>
               <img
-                src={ink.thumbnails.withSample}
-                alt={ink.name}
+                src={ink.color.thumbnails.withSample}
+                alt={ink.color.name}
                 width="120"
                 height="103"
                 className="w-full h-full object-scale-down"
@@ -80,7 +80,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
               </svg>
             </Button>
             <div className="text-xl px-4 text-center border-b border-theme-gray-primary grow">
-              {drops}
+              {ink.amount}
             </div>
             <Button
               className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0"
