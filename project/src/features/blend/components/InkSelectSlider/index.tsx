@@ -1,10 +1,10 @@
 import AddInkButton from '../AddInkButton'
 import { COLORS } from '@/libs/colors'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, EffectCoverflow } from 'swiper/modules'
+import { EffectCoverflow } from 'swiper/modules'
+import SliderNavButton from '../SliderNavButton'
 
 import 'swiper/css'
-import 'swiper/css/navigation'
 import 'swiper/css/effect-coverflow'
 import { useBlender } from '@/features/blend/hooks/use-blender'
 
@@ -18,8 +18,7 @@ export default function InkSelectSlider() {
         slidesPerView={3.5}
         centeredSlides
         loop
-        modules={[Navigation, EffectCoverflow]}
-        navigation
+        modules={[EffectCoverflow]}
         speed={800}
         effect={'coverflow'}
         coverflowEffect={{
@@ -34,12 +33,8 @@ export default function InkSelectSlider() {
         {COLORS.map((color) => (
           <SwiperSlide key={color.name} data-color-name={color.name}>
             {({ isActive }) => (
-              <div
-                className={
-                  'grid items-center justify-center gap-6 transition-all duration-300 ease-in-out'
-                }
-              >
-                <div className={isActive ? 'scale-110' : 'scale-90 opacity-85'}>
+              <div className="grid items-center justify-center gap-6 transition-all duration-300 ease-in-out">
+                <div className={isActive ? 'scale-110' : 'opacity-85'}>
                   <div className={isActive ? 'hidden' : 'block'}>
                     <picture>
                       <img
@@ -84,6 +79,13 @@ export default function InkSelectSlider() {
         <div slot="container-end" className="mt-8 text-center">
           <AddInkButton />
         </div>
+        <nav
+          slot="container-end"
+          className="absolute z-10 inset-0 m-auto max-w-xl h-fit flex items-center justify-between pointer-events-none [&_>_*]:pointer-events-auto"
+        >
+          <SliderNavButton direction="prev" />
+          <SliderNavButton direction="next" />
+        </nav>
       </Swiper>
     </div>
   )

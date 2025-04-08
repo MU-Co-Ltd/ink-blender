@@ -21,7 +21,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
   }
 
   return (
-    <div className="border empty:border-dashed border-theme-gray-primary rounded-tr-2xl h-full grid grid-rows-[auto_1fr_auto] gap-3">
+    <div className="border empty:border-dashed empty:min-h-60 border-theme-gray-primary rounded-tr-2xl h-full grid grid-rows-[auto_1fr_auto] gap-3">
       {ink && (
         <>
           <div className="flex justify-between items-start">
@@ -59,7 +59,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
               />
             </picture>
           </div>
-          <div className="flex items-center justify-center gap-2.5 pb-5 px-7">
+          <div className="flex items-center justify-center gap-2.5 pb-3.5 px-7">
             <Button
               className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0"
               onClick={handleRemoveDrops}

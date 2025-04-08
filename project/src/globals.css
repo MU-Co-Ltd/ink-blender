@@ -51,6 +51,15 @@
   .swiper-wrapper {
     @apply flex items-center;
   }
+
+  .swiper-slide.swiper-slide-prev,
+  .swiper-slide.swiper-slide-next {
+    @apply flex;
+  }
+
+  .swiper-slide.swiper-slide-next {
+    @apply justify-end;
+  }
 }
 
 :root {
