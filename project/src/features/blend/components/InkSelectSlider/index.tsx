@@ -28,7 +28,7 @@ export default function InkSelectSlider() {
           modifier: 1.5,
           slideShadows: false,
         }}
-        initialSlide={0}
+        slideToClickedSlide
       >
         {COLORS.map((color) => (
           <SwiperSlide key={color.name} data-color-name={color.name}>
@@ -42,14 +42,16 @@ export default function InkSelectSlider() {
                         alt={color.name}
                         width="215"
                         height="163"
+                        loading="eager"
                       />
                     </picture>
                   </div>
                   <button
                     type="button"
                     onClick={() => addInk(color)}
-                    className={`${isActive ? 'block' : 'hidden'} w-full aspect-[2]`}
+                    className={`${isActive ? 'block' : 'hidden'} w-full aspect-[2] cursor-pointer group`}
                     disabled={!isActive}
+                    title="色を選択する"
                   >
                     <picture>
                       <img
@@ -58,7 +60,7 @@ export default function InkSelectSlider() {
                         width="516"
                         height="353"
                         loading="eager"
-                        className="w-full h-full object-scale-down drop-shadow-md"
+                        className="w-full h-full object-scale-down drop-shadow-md group-hover:drop-shadow-xl group-hover:scale-110 transition-all duration-300"
                       />
                     </picture>
                   </button>

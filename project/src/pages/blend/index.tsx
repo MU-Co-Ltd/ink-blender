@@ -1,5 +1,6 @@
 import BlendPieChart from '@/features/blend/components/BlendPieChart'
 import InkSelectSlider from '@/features/blend/components/InkSelectSlider'
+import RunBlendButton from '@/features/blend/components/RunBlendButton'
 import SelectedInkCard from '@/features/blend/components/SelectedInkCard'
 import { useSelectedInks } from '@/features/blend/providers/SelectedInks'
 import { MAX_INK_COUNT } from '@/libs/constants'
@@ -18,7 +19,7 @@ function RouteComponent() {
         <InkSelectSlider />
       </div>
       <div className="bg-white shadow-[0_-3px_5px_0_theme('colors.gray.200')]">
-        <div className="p-8 grid grid-cols-[1fr_auto] gap-x-6 gap-y-3 max-w-7xl mx-auto">
+        <div className="p-8 grid grid-cols-[1fr_auto] gap-x-6 gap-y-4 max-w-7xl mx-auto">
           <ul className="grid grid-cols-4 gap-3 row-span-2">
             {Array.from({ length: MAX_INK_COUNT }).map((_, index) => (
               <li key={index}>
@@ -46,12 +47,7 @@ function RouteComponent() {
             </div>
           </div>
           <div>
-            <button
-              type="button"
-              className="block w-full py-2.5 text-theme-gray-primary bg-theme-gray-secondary rounded"
-            >
-              ブレンド開始
-            </button>
+            <RunBlendButton />
           </div>
         </div>
       </div>

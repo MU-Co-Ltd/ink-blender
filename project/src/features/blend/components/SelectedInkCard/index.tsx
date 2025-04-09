@@ -10,25 +10,16 @@ interface ComponentProps {
 export default function SelectedInkCard({ ink, order }: ComponentProps) {
   const { decreaseInkAmount, increaseInkAmount, removeInk } = useBlender()
 
-  const handleAddDrops = () => {
-    if (!ink) return
-    increaseInkAmount(ink.color)
-  }
-
-  const handleRemoveDrops = () => {
-    if (!ink) return
-    decreaseInkAmount(ink.color)
-  }
-
   return (
-    <div className="border empty:border-dashed empty:min-h-60 border-theme-gray-primary rounded-tr-2xl h-full grid grid-rows-[auto_1fr_auto] gap-3">
+    <div className="border empty:border-dashed min-h-[15.5rem] border-theme-gray-primary rounded-tr-2xl h-full grid grid-rows-[auto_1fr_auto] gap-3">
       {ink && (
         <>
           <div className="flex justify-between items-start">
-            <p className="px-5 py-2 bg-theme-gray-primary text-theme-gray-tertiary text-xs rounded-br-2xl">
+            <p className="px-5 py-1.5 bg-theme-gray-primary text-theme-gray-tertiary text-xs rounded-br-2xl">
               <span className="text-base leading-none">{order}</span>色目
             </p>
             <Button
+              variant="ghost"
               className="text-theme-gray-primary bg-transparent"
               onClick={() => removeInk(ink.color)}
             >
@@ -38,7 +29,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-6"
+                className="size-5"
               >
                 <path
                   strokeLinecap="round"
@@ -48,7 +39,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
               </svg>
             </Button>
           </div>
-          <div className="px-7">
+          <div className="px-4">
             <picture>
               <img
                 src={ink.color.thumbnails.withSample}
@@ -59,10 +50,10 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
               />
             </picture>
           </div>
-          <div className="flex items-center justify-center gap-2.5 pb-3.5 px-7">
+          <div className="flex items-center justify-center gap-2.5 pb-3.5 px-4">
             <Button
               className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0"
-              onClick={handleRemoveDrops}
+              onClick={() => decreaseInkAmount(ink.color)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -79,12 +70,12 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
                 />
               </svg>
             </Button>
-            <div className="text-xl px-4 text-center border-b border-theme-gray-primary grow">
+            <div className="text-xl px-4 text-center border-b border-theme-gray-primary basis-12">
               {ink.amount}
             </div>
             <Button
               className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0"
-              onClick={handleAddDrops}
+              onClick={() => increaseInkAmount(ink.color)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

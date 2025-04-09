@@ -8,6 +8,7 @@ export function useBlender() {
   const [isSelectedMaxInks, toggleIsSelectedMaxInks] = useState<boolean>(false)
   const [isSelectedMaxAmount, toggleIsSelectedMaxAmount] =
     useState<boolean>(false)
+  const [canBlend, setCanBlend] = useState<boolean>(false)
 
   /**
    * Add ink to the selected inks
@@ -95,6 +96,9 @@ export function useBlender() {
     } else {
       toggleIsSelectedMaxInks(false)
     }
+
+    // ブレンド開始可能条件の確認：2種類以上のインクかつ合計量が4
+    setCanBlend(selectedInks.length >= 2 && selectedInksAmount === 4)
   }
 
   useEffect(() => {
@@ -109,5 +113,6 @@ export function useBlender() {
     isSelectedMaxAmount,
     isSelectedMaxInks,
     removeInk,
+    canBlend,
   }
 }
