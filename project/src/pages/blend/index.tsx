@@ -1,19 +1,14 @@
 import BlendPieChart from '@/features/blend/components/BlendPieChart'
 import InkSelectSlider from '@/features/blend/components/InkSelectSlider'
 import RunBlendButton from '@/features/blend/components/RunBlendButton'
-import SelectedInkCard from '@/features/blend/components/SelectedInkCard'
-import { $selectedInks } from '@/features/blend/stores/SelectedInks'
-import { MAX_INK_COUNT } from '@/libs/constants'
+import SelectedInkList from '@/features/blend/components/SelectedInkList'
 import { createFileRoute } from '@tanstack/react-router'
-import { useStore } from '@nanostores/react'
 
 export const Route = createFileRoute('/blend/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const selectedInks = useStore($selectedInks)
-
   return (
     <main className="grid grid-rows-[1fr_auto]">
       <div className="self-center overflow-x-hidden">
@@ -21,13 +16,9 @@ function RouteComponent() {
       </div>
       <div className="bg-white shadow-[0_-3px_5px_0_theme('colors.gray.200')]">
         <div className="p-8 grid grid-cols-[1fr_auto] gap-x-6 gap-y-4 max-w-7xl mx-auto">
-          <ul className="grid grid-cols-4 gap-3 row-span-2">
-            {Array.from({ length: MAX_INK_COUNT }).map((_, index) => (
-              <li key={index}>
-                <SelectedInkCard order={index + 1} ink={selectedInks[index]} />
-              </li>
-            ))}
-          </ul>
+          <div className="row-span-2">
+            <SelectedInkList />
+          </div>
           <div className="p-5 border border-theme-gray-primary rounded-2xl flex items-center gap-3">
             <div className="space-y-3">
               <p>現在のブレンド比率</p>

@@ -1,13 +1,30 @@
 import { Button } from '@/features/common/components/ui/button'
 import type { TInk } from '@/types'
 import { useBlender } from '@/features/blend/hooks/use-blender'
+import { MAX_INK_COUNT } from '@/libs/constants'
+import { useStore } from '@nanostores/react'
+import { $selectedInks } from '@/features/blend/stores/SelectedInks'
+
+export default function SelectedInkList() {
+  const selectedInks = useStore($selectedInks)
+
+  return (
+    <ul className="grid grid-cols-4 gap-3">
+      {Array.from({ length: MAX_INK_COUNT }).map((_, index) => (
+        <li key={index}>
+          <SelectedInkCard order={index + 1} ink={selectedInks[index]} />
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 interface ComponentProps {
   ink?: TInk
   order: number
 }
 
-export default function SelectedInkCard({ ink, order }: ComponentProps) {
+function SelectedInkCard({ ink, order }: ComponentProps) {
   const { decreaseInkAmount, increaseInkAmount, removeInk } = useBlender()
 
   return (
