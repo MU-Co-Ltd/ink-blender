@@ -2,16 +2,17 @@ import BlendPieChart from '@/features/blend/components/BlendPieChart'
 import InkSelectSlider from '@/features/blend/components/InkSelectSlider'
 import RunBlendButton from '@/features/blend/components/RunBlendButton'
 import SelectedInkCard from '@/features/blend/components/SelectedInkCard'
-import { useSelectedInks } from '@/features/blend/providers/SelectedInks'
+import { $selectedInks } from '@/features/blend/stores/SelectedInks'
 import { MAX_INK_COUNT } from '@/libs/constants'
 import { createFileRoute } from '@tanstack/react-router'
+import { useStore } from '@nanostores/react'
 
 export const Route = createFileRoute('/blend/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { selectedInks } = useSelectedInks()
+  const selectedInks = useStore($selectedInks)
 
   return (
     <main className="grid grid-rows-[1fr_auto]">

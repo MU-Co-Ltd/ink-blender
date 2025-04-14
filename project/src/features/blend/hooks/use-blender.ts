@@ -1,10 +1,11 @@
 import type { TColor } from '@/types'
-import { useSelectedInks } from '@/features/blend/providers/SelectedInks'
 import { useEffect, useState } from 'react'
 import { MAX_INK_COUNT, MAX_DROPS_COUNT } from '@/libs/constants'
+import { useStore } from '@nanostores/react'
+import { $selectedInks } from '@/features/blend/stores/SelectedInks'
 
 export function useBlender() {
-  const { selectedInks, setSelectedInks } = useSelectedInks()
+  const selectedInks = useStore($selectedInks)
   const [isSelectedMaxInks, toggleIsSelectedMaxInks] = useState<boolean>(false)
   const [isSelectedMaxAmount, toggleIsSelectedMaxAmount] =
     useState<boolean>(false)
@@ -24,15 +25,15 @@ export function useBlender() {
       return
     }
     // If the ink is not selected, add it to the selected inks
-    setSelectedInks((prev) => [...prev, { color, amount: 1 }])
+    $selectedInks.set([...selectedInks, { color, amount: 1 }])
   }
 
   /**
    * Remove ink from the selected inks
    */
   function removeInk(target: TColor) {
-    setSelectedInks((prev) =>
-      prev.filter(({ color }) => color.name !== target.name)
+    $selectedInks.set(
+      selectedInks.filter(({ color }) => color.name !== target.name)
     )
   }
 
@@ -49,8 +50,8 @@ export function useBlender() {
     // If the ink is not selected, do nothing
     if (!isSelected(target)) return
     // If the ink is selected, increase the amount of the selected ink
-    setSelectedInks((prev) =>
-      prev.map((ink) => {
+    $selectedInks.set(
+      selectedInks.map((ink) => {
         if (ink.color.name === target.name) {
           return { ...ink, amount: ink.amount + 1 }
         }
@@ -70,8 +71,8 @@ export function useBlender() {
       return
     }
     // If the ink is selected, decrease the amount of the selected ink
-    setSelectedInks((prev) =>
-      prev.map((ink) => {
+    $selectedInks.set(
+      selectedInks.map((ink) => {
         if (ink.color.name === target.name) {
           return { ...ink, amount: ink.amount - 1 }
         }

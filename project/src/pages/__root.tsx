@@ -1,4 +1,3 @@
-import { SelectedInksProvider } from '@/features/blend/providers/SelectedInks'
 import { HeadContent, Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
@@ -13,9 +12,7 @@ function RootComponent() {
   return (
     <>
       <HeadContent />
-      <SelectedInksProvider>
-        <Outlet />
-      </SelectedInksProvider>
+      <Outlet />
       {import.meta.env.DEV && <TanStackRouterDevtools />}
     </>
   )
