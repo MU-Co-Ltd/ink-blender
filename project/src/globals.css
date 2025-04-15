@@ -13,6 +13,8 @@
   --color-theme-gray-secondary: #ededed;
   --color-theme-gray-tertiary: #7e7d7d;
   --color-theme-orage-primary: #ffaf0e;
+  --color-theme-red-primary: #ef0014;
+  --color-theme-black-primary: #24140e;
 }
 
 @layer base {

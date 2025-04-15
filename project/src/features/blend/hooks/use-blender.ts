@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { MAX_INK_COUNT, MAX_DROPS_COUNT } from '@/libs/constants'
 import { useStore } from '@nanostores/react'
 import { $selectedInks } from '@/features/blend/stores/SelectedInks'
+import { useColor } from './use-color'
 
 export function useBlender() {
   const selectedInks = useStore($selectedInks)
@@ -10,6 +11,8 @@ export function useBlender() {
   const [isSelectedMaxAmount, toggleIsSelectedMaxAmount] =
     useState<boolean>(false)
   const [canBlend, setCanBlend] = useState<boolean>(false)
+  const { getHexColorValue, getRgbColorValue, isValidRgbColorValue } =
+    useColor()
 
   /**
    * Add ink to the selected inks
@@ -102,6 +105,40 @@ export function useBlender() {
     setCanBlend(selectedInks.length >= 2 && selectedInksAmount === 4)
   }
 
+  /**
+   * Get result blending ink color hex code
+   */
+  function getBlendedInkHex() {
+    const blendedInk = selectedInks.reduce(
+      (acc, { color, amount }) => {
+        const [r, g, b] = getRgbColorValue(color.hex)
+        acc.r += r * amount
+        acc.g += g * amount
+        acc.b += b * amount
+        return acc
+      },
+      { r: 0, g: 0, b: 0 }
+    )
+
+    // Check if the blended ink color is valid
+    if (
+      !isValidRgbColorValue(blendedInk.r) ||
+      !isValidRgbColorValue(blendedInk.g) ||
+      !isValidRgbColorValue(blendedInk.b)
+    ) {
+      console.error('Invalid blended ink color:', blendedInk)
+      return getHexColorValue(0, 0, 0)
+    }
+
+    const blendedInkHex = getHexColorValue(
+      Math.floor(blendedInk.r / selectedInks.length),
+      Math.floor(blendedInk.g / selectedInks.length),
+      Math.floor(blendedInk.b / selectedInks.length)
+    )
+
+    return blendedInkHex
+  }
+
   useEffect(() => {
     updateState()
   }, [selectedInks])
@@ -109,6 +146,7 @@ export function useBlender() {
   return {
     addInk,
     decreaseInkAmount,
+    getBlendedInkHex,
     increaseInkAmount,
     isSelected,
     isSelectedMaxAmount,
