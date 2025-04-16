@@ -15,7 +15,7 @@ export default function RunBlendButton() {
   return (
     <Button
       type="button"
-      className="w-full py-2.5 rounded-md text-xl font-bold text-center text-white bg-theme-orage-primary hover:bg-theme-orage-primary/75 cursor-pointer disabled:bg-theme-gray-secondary disabled:text-theme-gray-primary"
+      className="w-full h-auto py-1.5 rounded text-xl font-bold text-center text-white bg-theme-orage-primary hover:bg-theme-orage-primary/75 cursor-pointer disabled:bg-theme-gray-secondary disabled:text-theme-gray-primary"
       disabled={!canBlend}
       onClick={handleOnClick}
     >

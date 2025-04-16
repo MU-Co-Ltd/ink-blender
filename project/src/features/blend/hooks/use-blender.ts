@@ -119,10 +119,14 @@ export function useBlender() {
       },
       { r: 0, g: 0, b: 0 }
     )
+    const totalAmount = selectedInks.reduce(
+      (acc, { amount }) => acc + amount,
+      0
+    )
 
-    const blendedInkRed = Math.floor(r / selectedInks.length)
-    const blendedInkGreen = Math.floor(g / selectedInks.length)
-    const blendedInkBlue = Math.floor(b / selectedInks.length)
+    const blendedInkRed = Math.floor(r / totalAmount)
+    const blendedInkGreen = Math.floor(g / totalAmount)
+    const blendedInkBlue = Math.floor(b / totalAmount)
 
     // Check if the blended ink color is valid
     if (
@@ -130,15 +134,15 @@ export function useBlender() {
       !isValidRgbColorValue(blendedInkGreen) ||
       !isValidRgbColorValue(blendedInkBlue)
     ) {
-      console.error('Invalid blended ink color')
+      console.error('Invalid blended ink color', {
+        blendedInkRed,
+        blendedInkGreen,
+        blendedInkBlue,
+      })
       return getHexColorValue(0, 0, 0)
     }
 
-    return getHexColorValue(
-      blendedInkRed,
-      blendedInkGreen,
-      blendedInkBlue
-    )
+    return getHexColorValue(blendedInkRed, blendedInkGreen, blendedInkBlue)
   }
 
   useEffect(() => {
