@@ -15,6 +15,7 @@ import {
   FormItem,
 } from '@/features/common/components/ui/form'
 import ResultFormSubmitButton from '@/features/blend/components/ResultFormSubmitButton'
+import TestDrawingDialog from '@/features/blend/components/TestDrawingDialog'
 
 export const Route = createFileRoute('/blend/result/')({
   component: RouteComponent,
@@ -160,8 +161,13 @@ function RouteComponent() {
               </div>
             </div>
             {/** @memo blend details */}
-            <div className="max-w-sm mx-auto">
-              <ResultFormSubmitButton />
+            <div className="max-w-sm mx-auto space-y-7">
+              <div>
+                <TestDrawingDialog />
+              </div>
+              <div>
+                <ResultFormSubmitButton />
+              </div>
             </div>
             {/** @memo action buttons */}
           </form>
