@@ -17,7 +17,6 @@ import { Route as BlendIndexImport } from './pages/blend/index'
 import { Route as BlendResultRouteImport } from './pages/blend/result/route'
 import { Route as BlendResultIndexImport } from './pages/blend/result/index'
 import { Route as BlendResultPreviewImport } from './pages/blend/result/preview'
-import { Route as BlendResultErrorImport } from './pages/blend/result/error'
 
 // Create/Update Routes
 
@@ -57,12 +56,6 @@ const BlendResultPreviewRoute = BlendResultPreviewImport.update({
   getParentRoute: () => BlendResultRouteRoute,
 } as any)
 
-const BlendResultErrorRoute = BlendResultErrorImport.update({
-  id: '/error',
-  path: '/error',
-  getParentRoute: () => BlendResultRouteRoute,
-} as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -95,13 +88,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlendIndexImport
       parentRoute: typeof BlendRouteImport
     }
-    '/blend/result/error': {
-      id: '/blend/result/error'
-      path: '/error'
-      fullPath: '/blend/result/error'
-      preLoaderRoute: typeof BlendResultErrorImport
-      parentRoute: typeof BlendResultRouteImport
-    }
     '/blend/result/preview': {
       id: '/blend/result/preview'
       path: '/preview'
@@ -122,13 +108,11 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface BlendResultRouteRouteChildren {
-  BlendResultErrorRoute: typeof BlendResultErrorRoute
   BlendResultPreviewRoute: typeof BlendResultPreviewRoute
   BlendResultIndexRoute: typeof BlendResultIndexRoute
 }
 
 const BlendResultRouteRouteChildren: BlendResultRouteRouteChildren = {
-  BlendResultErrorRoute: BlendResultErrorRoute,
   BlendResultPreviewRoute: BlendResultPreviewRoute,
   BlendResultIndexRoute: BlendResultIndexRoute,
 }
@@ -155,7 +139,6 @@ export interface FileRoutesByFullPath {
   '/blend': typeof BlendRouteRouteWithChildren
   '/blend/result': typeof BlendResultRouteRouteWithChildren
   '/blend/': typeof BlendIndexRoute
-  '/blend/result/error': typeof BlendResultErrorRoute
   '/blend/result/preview': typeof BlendResultPreviewRoute
   '/blend/result/': typeof BlendResultIndexRoute
 }
@@ -163,7 +146,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blend': typeof BlendIndexRoute
-  '/blend/result/error': typeof BlendResultErrorRoute
   '/blend/result/preview': typeof BlendResultPreviewRoute
   '/blend/result': typeof BlendResultIndexRoute
 }
@@ -174,7 +156,6 @@ export interface FileRoutesById {
   '/blend': typeof BlendRouteRouteWithChildren
   '/blend/result': typeof BlendResultRouteRouteWithChildren
   '/blend/': typeof BlendIndexRoute
-  '/blend/result/error': typeof BlendResultErrorRoute
   '/blend/result/preview': typeof BlendResultPreviewRoute
   '/blend/result/': typeof BlendResultIndexRoute
 }
@@ -186,23 +167,16 @@ export interface FileRouteTypes {
     | '/blend'
     | '/blend/result'
     | '/blend/'
-    | '/blend/result/error'
     | '/blend/result/preview'
     | '/blend/result/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/blend'
-    | '/blend/result/error'
-    | '/blend/result/preview'
-    | '/blend/result'
+  to: '/' | '/blend' | '/blend/result/preview' | '/blend/result'
   id:
     | '__root__'
     | '/'
     | '/blend'
     | '/blend/result'
     | '/blend/'
-    | '/blend/result/error'
     | '/blend/result/preview'
     | '/blend/result/'
   fileRoutesById: FileRoutesById
@@ -246,7 +220,6 @@ export const routeTree = rootRoute
       "filePath": "blend/result/route.tsx",
       "parent": "/blend",
       "children": [
-        "/blend/result/error",
         "/blend/result/preview",
         "/blend/result/"
       ]
@@ -254,10 +227,6 @@ export const routeTree = rootRoute
     "/blend/": {
       "filePath": "blend/index.tsx",
       "parent": "/blend"
-    },
-    "/blend/result/error": {
-      "filePath": "blend/result/error.tsx",
-      "parent": "/blend/result"
     },
     "/blend/result/preview": {
       "filePath": "blend/result/preview.tsx",

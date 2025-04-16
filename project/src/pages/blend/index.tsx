@@ -1,6 +1,6 @@
 import BlendPieChart from '@/features/blend/components/BlendPieChart'
 import InkSelectSlider from '@/features/blend/components/InkSelectSlider'
-import RunBlendButton from '@/features/blend/components/RunBlendButton'
+import ExecuteBlendButton from '@/features/blend/components/ExecuteBlendButton'
 import SelectedInkList from '@/features/blend/components/SelectedInkList'
 import { createFileRoute } from '@tanstack/react-router'
 
@@ -39,7 +39,7 @@ function RouteComponent() {
             </div>
           </div>
           <div>
-            <RunBlendButton />
+            <ExecuteBlendButton />
           </div>
         </div>
       </div>

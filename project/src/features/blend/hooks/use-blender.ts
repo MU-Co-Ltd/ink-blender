@@ -109,7 +109,7 @@ export function useBlender() {
    * Get result blending ink color hex code
    */
   function getBlendedInkHex() {
-    const blendedInk = selectedInks.reduce(
+    const { r, g, b } = selectedInks.reduce(
       (acc, { color, amount }) => {
         const [r, g, b] = getRgbColorValue(color.hex)
         acc.r += r * amount
@@ -120,23 +120,25 @@ export function useBlender() {
       { r: 0, g: 0, b: 0 }
     )
 
+    const blendedInkRed = Math.floor(r / selectedInks.length)
+    const blendedInkGreen = Math.floor(g / selectedInks.length)
+    const blendedInkBlue = Math.floor(b / selectedInks.length)
+
     // Check if the blended ink color is valid
     if (
-      !isValidRgbColorValue(blendedInk.r) ||
-      !isValidRgbColorValue(blendedInk.g) ||
-      !isValidRgbColorValue(blendedInk.b)
+      !isValidRgbColorValue(blendedInkRed) ||
+      !isValidRgbColorValue(blendedInkGreen) ||
+      !isValidRgbColorValue(blendedInkBlue)
     ) {
-      console.error('Invalid blended ink color:', blendedInk)
+      console.error('Invalid blended ink color')
       return getHexColorValue(0, 0, 0)
     }
 
-    const blendedInkHex = getHexColorValue(
-      Math.floor(blendedInk.r / selectedInks.length),
-      Math.floor(blendedInk.g / selectedInks.length),
-      Math.floor(blendedInk.b / selectedInks.length)
+    return getHexColorValue(
+      blendedInkRed,
+      blendedInkGreen,
+      blendedInkBlue
     )
-
-    return blendedInkHex
   }
 
   useEffect(() => {

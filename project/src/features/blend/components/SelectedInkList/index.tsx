@@ -4,6 +4,7 @@ import { useBlender } from '@/features/blend/hooks/use-blender'
 import { MAX_INK_COUNT } from '@/libs/constants'
 import { useStore } from '@nanostores/react'
 import { $selectedInks } from '@/features/blend/stores/SelectedInks'
+import BorderCard from '@/features/common/components/theme/BorderCard'
 
 export default function SelectedInkList() {
   const selectedInks = useStore($selectedInks)
@@ -28,7 +29,7 @@ function SelectedInkCard({ ink, order }: ComponentProps) {
   const { decreaseInkAmount, increaseInkAmount, removeInk } = useBlender()
 
   return (
-    <div className="border empty:border-dashed min-h-[15.5rem] border-theme-gray-primary rounded-tr-2xl h-full grid grid-rows-[auto_1fr_auto] gap-3">
+    <BorderCard className="empty:border-dashed min-h-[15.5rem] rounded-tr-2xl h-full grid grid-rows-[auto_1fr_auto] gap-3">
       {ink && (
         <>
           <div className="flex justify-between items-start">
@@ -112,6 +113,6 @@ function SelectedInkCard({ ink, order }: ComponentProps) {
           </div>
         </>
       )}
-    </div>
+    </BorderCard>
   )
 }
