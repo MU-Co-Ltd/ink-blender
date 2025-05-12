@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useBlender } from '@/features/blend/hooks/use-blender'
-import BlendResultBottle from '@/assets/blended-bottle.png'
+import BlendResultBottle from '@/assets/blended-bottle.svg'
 import RecipeCard from '@/features/blend/components/RecipeCard'
 import {
   blendResultFormSchema,
@@ -117,17 +117,17 @@ function RouteComponent() {
               <div className="flex flex-col items-center basis-1/4 shrink-0">
                 <div className="relative z-1">
                   <div
-                    className="absolute -z-1 left-0 bottom-0 right-0 h-1/2"
+                    className="absolute -z-1 left-0.25 bottom-0.25 right-0.25 h-1/2"
                     style={{ backgroundColor: blendedInkColor }}
                   />
                   <div>
                     <picture>
-                      <img src={BlendResultBottle} width="68" height="163" />
+                      <img src={BlendResultBottle} width="68" height="168" />
                     </picture>
                   </div>
                 </div>
                 <div
-                  className="w-full [&_svg]:w-full [&_svg]:h-auto"
+                  className="w-full [&_svg]:w-full [&_svg]:h-auto -mt-4"
                   style={{ color: blendedInkColor }}
                 >
                   <svg
