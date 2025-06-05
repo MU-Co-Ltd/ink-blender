@@ -3,8 +3,12 @@ import { $blendedColorProperties } from '@/features/blend/stores/BlendedColorPro
 import DownloadCardButton from '@/features/preview/components/DownloadCardButton'
 import PreviewCard from '@/features/preview/components/PreviewCard'
 import ResultPaint from '@/features/preview/components/ResultPaint'
+import { generateFileName } from '@/libs/utils'
 import { useStore } from '@nanostores/react'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import html2canvas from 'html2canvas-pro'
+import { useRef } from 'react'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/blend/result/preview')({
   component: RouteComponent,
@@ -14,11 +18,34 @@ function RouteComponent() {
   const { getBlendedInkHex, selectedInks } = useBlender()
   const { name: inkName } = useStore($blendedColorProperties)
   const blendedInkHex = getBlendedInkHex()
+  const previewCardRef = useRef<HTMLDivElement>(null)
+
+  const handleDownload = () => {
+    if (!previewCardRef.current || !inkName || selectedInks.length === 0) {
+      toast.error('画像のダウンロードに失敗しました。')
+      return
+    }
+    html2canvas(previewCardRef.current)
+      .then((canvas) => {
+        const fileName = generateFileName(inkName)
+        if (!fileName) {
+          throw new Error('無効なファイル名です。')
+        }
+        const link = document.createElement('a')
+        link.href = canvas.toDataURL('image/jpg')
+        link.download = fileName
+        link.click()
+        link.remove()
+      })
+      .catch((error) => {
+        toast.error(error?.message)
+      })
+  }
 
   return (
     <div className="space-y-16">
       <div className="max-w-3xl mx-auto">
-        <PreviewCard>
+        <PreviewCard ref={previewCardRef}>
           <div className="flex items-center gap-7">
             <div className="flex flex-col items-center gap-2 basis-1/3 shrink-0">
               <div className="size-44 2xl:size-48">
@@ -77,7 +104,7 @@ function RouteComponent() {
       </div>
       {/** @memo preview card */}
       <div className="max-w-sm mx-auto">
-        <DownloadCardButton />
+        <DownloadCardButton onClick={handleDownload} />
       </div>
       {/** @memo download button */}
       <div className="text-center">

@@ -1,3 +1,4 @@
+import { Toaster } from '@/features/common/components/ui/sonner'
 import { HeadContent, Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
@@ -13,6 +14,7 @@ function RootComponent() {
     <>
       <HeadContent />
       <Outlet />
+      <Toaster position="bottom-right" richColors />
       {import.meta.env.DEV && <TanStackRouterDevtools />}
     </>
   )

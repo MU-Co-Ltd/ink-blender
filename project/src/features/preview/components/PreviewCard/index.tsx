@@ -1,13 +1,18 @@
 import AppLogo from '@/features/common/components/theme/AppLogo'
 import type { ReactNode } from '@tanstack/react-router'
+import { RefObject } from 'react'
 
 interface ComponentProps {
   children?: ReactNode
+  ref?: RefObject<HTMLDivElement | null>
 }
 
-export default function PreviewCard({ children }: ComponentProps) {
+export default function PreviewCard({ children, ref }: ComponentProps) {
   return (
-    <div className="relative z-1 shadow-lg border border-theme-beige-primary">
+    <div
+      className="relative z-1 shadow-lg border border-theme-beige-primary"
+      ref={ref}
+    >
       <div className="absolute -z-1 inset-0">
         <img
           src="/paper-bg.jpg"
