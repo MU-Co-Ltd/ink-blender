@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useBlender } from '@/features/blend/hooks/use-blender'
 import BlendResultBottle from '@/assets/blended-bottle.svg'
 import RecipeCard from '@/features/blend/components/RecipeCard'
@@ -13,24 +13,34 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormMessage,
 } from '@/features/common/components/ui/form'
 import ResultFormSubmitButton from '@/features/blend/components/ResultFormSubmitButton'
 import TestDrawingDialog from '@/features/blend/components/TestDrawingDialog'
 import Canvas from '@/features/draw/components/Canvas'
+import { $blendedColorProperties } from '@/features/blend/stores/BlendedColorProperties'
 
 export const Route = createFileRoute('/blend/result/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const navigate = useNavigate()
+  // ブレンドの状態を取得するためのカスタムフック
   const { getBlendedInkHex } = useBlender()
+  // ブレンドされたインクの色を取得
   const blendedInkColor = getBlendedInkHex()
+  // フォームの初期化
   const blendResultForm = useForm<BlendResultFormSchema>({
     resolver: zodResolver(blendResultFormSchema),
     defaultValues: { inkName: '' },
   })
-  const handleOnSubmit = (data: BlendResultFormSchema) => {
-    console.log(data)
+  // フォームの送信処理
+  const handleOnSubmit = ({ inkName }: BlendResultFormSchema) => {
+    // フォームデータをstoreに保存する
+    $blendedColorProperties.set({ name: inkName })
+    // 標本プレビューページへリダイレクト
+    navigate({ to: '/blend/result/preview', replace: true })
   }
 
   return (
@@ -65,12 +75,14 @@ function RouteComponent() {
               control={blendResultForm.control}
               name="inkName"
               render={({ field, fieldState }) => (
-                <FormItem className="border-b border-theme-gray-primary pb-3 max-w-prose mx-auto">
+                <FormItem className="max-w-prose mx-auto space-y-2">
                   <FormControl>
-                    <div className="relative z-1 flex justify-center">
+                    <div
+                      className={`relative z-1 flex justify-center border-b pb-3 ${fieldState.invalid ? 'border-theme-red-primary' : 'border-theme-gray-primary'}`}
+                    >
                       <input
                         type="text"
-                        className="text-xl w-fit text-center py-1 px-3 max-w-full focus:outline-none focus:border-none focus-visible:outline-none focus-visible:border-none"
+                        className={`text-xl focus:w-full focus-visible:w-full text-center py-1 px-3 max-w-full focus:outline-none focus:border-none focus-visible:outline-none focus-visible:border-none ${fieldState.isDirty ? 'w-full' : 'w-fit'}`}
                         {...field}
                       />
                       <p
@@ -110,6 +122,7 @@ function RouteComponent() {
                       </p>
                     </div>
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

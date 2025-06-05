@@ -15,7 +15,7 @@ interface ComponentProps {
 export default function TestDrawingDialog({ children }: ComponentProps) {
   return (
     <Dialog>
-      <DialogTrigger className="w-full h-auto flex items-end justify-center gap-2 py-1.5 px-4 border-2 border-black rounded bg-white text-black cursor-pointer hover:opacity-75">
+      <DialogTrigger className="w-full h-auto flex items-end justify-center gap-2 py-1.5 px-4 border-2 border-black rounded text-black cursor-pointer hover:opacity-50 hover:bg-transparent">
         <span className="relative w-6 h-4 shrink-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"

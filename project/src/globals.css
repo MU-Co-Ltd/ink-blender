@@ -15,10 +15,15 @@
   --color-theme-orage-primary: #ffaf0e;
   --color-theme-red-primary: #ef0014;
   --color-theme-beige-primary: #dad6c1;
+  --color-theme-beige-secondary: #ede4df;
   --color-theme-black-primary: #24140e;
 }
 
 @layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
   body {
     @apply size-full overflow-hidden text-black;
     background-image: url('./assets/bg-grid.png');
@@ -36,16 +41,6 @@
 
   img:where(a *) {
     @apply pointer-events-auto;
-  }
-}
-
-@layer components {
-  .z-1 {
-    z-index: 1;
-  }
-
-  .-z-1 {
-    z-index: -1;
   }
 }
 
@@ -171,13 +166,4 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }

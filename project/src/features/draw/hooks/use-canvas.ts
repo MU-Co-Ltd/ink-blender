@@ -2,7 +2,7 @@ import { useColor } from '@/features/blend/hooks/use-color'
 import { useCallback } from 'react'
 
 export function useCanvas() {
-  const { getRgbColorValue, isValidRgbColorValue } = useColor()
+  const { getRgbFromHex, isValidRgbColorValue } = useColor()
 
   const initializeCanvas = useCallback((canvas: HTMLCanvasElement) => {
     canvas.style.width = `${canvas.clientWidth}px`
@@ -40,7 +40,7 @@ export function useCanvas() {
       color: string = '#000000',
       isEnd: boolean = false
     ) => {
-      const rgbColor = getRgbColorValue(color)
+      const rgbColor = getRgbFromHex(color)
       rgbColor.forEach((value) => {
         if (!isValidRgbColorValue(value)) {
           console.error('Invalid RGB color value:', value)

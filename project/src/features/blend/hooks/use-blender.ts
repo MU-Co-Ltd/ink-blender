@@ -11,8 +11,7 @@ export function useBlender() {
   const [isSelectedMaxAmount, toggleIsSelectedMaxAmount] =
     useState<boolean>(false)
   const [canBlend, setCanBlend] = useState<boolean>(false)
-  const { getHexColorValue, getRgbColorValue, isValidRgbColorValue } =
-    useColor()
+  const { getHexFromRgb, getRgbFromHex, isValidRgbColorValue } = useColor()
 
   /**
    * Add ink to the selected inks
@@ -111,7 +110,7 @@ export function useBlender() {
   function getBlendedInkHex() {
     const { r, g, b } = selectedInks.reduce(
       (acc, { color, amount }) => {
-        const [r, g, b] = getRgbColorValue(color.hex)
+        const [r, g, b] = getRgbFromHex(color.hex)
         acc.r += r * amount
         acc.g += g * amount
         acc.b += b * amount
@@ -139,10 +138,10 @@ export function useBlender() {
         blendedInkGreen,
         blendedInkBlue,
       })
-      return getHexColorValue(0, 0, 0)
+      return getHexFromRgb(0, 0, 0)
     }
 
-    return getHexColorValue(blendedInkRed, blendedInkGreen, blendedInkBlue)
+    return getHexFromRgb(blendedInkRed, blendedInkGreen, blendedInkBlue)
   }
 
   useEffect(() => {
@@ -151,6 +150,7 @@ export function useBlender() {
 
   return {
     addInk,
+    canBlend,
     decreaseInkAmount,
     getBlendedInkHex,
     increaseInkAmount,
@@ -158,6 +158,6 @@ export function useBlender() {
     isSelectedMaxAmount,
     isSelectedMaxInks,
     removeInk,
-    canBlend,
+    selectedInks,
   }
 }

@@ -13,3 +13,7 @@ export type TInk = {
   color: TColor
   amount: number
 }
+
+export type TBlendedColorProperties = {
+  name: string
+}
