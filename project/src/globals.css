@@ -25,7 +25,7 @@
   }
 
   body {
-    @apply size-full overflow-hidden text-black;
+    @apply size-full overflow-hidden text-black font-serif;
     background-image: url('./assets/bg-grid.png');
     background-size: 1.25rem;
     background-repeat: repeat;

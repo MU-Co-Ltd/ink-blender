@@ -3,10 +3,10 @@ import { COLORS } from '@/libs/colors'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow } from 'swiper/modules'
 import SliderNavButton from '../SliderNavButton'
+import { useBlender } from '@/features/blend/hooks/use-blender'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
-import { useBlender } from '@/features/blend/hooks/use-blender'
 
 export default function InkSelectSlider() {
   const { addInk } = useBlender()
@@ -29,6 +29,7 @@ export default function InkSelectSlider() {
           slideShadows: false,
         }}
         slideToClickedSlide
+        loopAdditionalSlides={2}
       >
         {COLORS.map((color) => (
           <SwiperSlide key={color.name} data-color-name={color.name}>

@@ -1,8 +1,8 @@
 import BlendPieChart from '@/features/blend/components/BlendPieChart'
 import InkSelectSlider from '@/features/blend/components/InkSelectSlider'
-import ExecuteBlendButton from '@/features/blend/components/ExecuteBlendButton'
 import SelectedInkList from '@/features/blend/components/SelectedInkList'
 import { createFileRoute } from '@tanstack/react-router'
+import ConfirmBlendDialog from '@/features/blend/components/ConfirmBlendDialog'
 
 export const Route = createFileRoute('/blend/')({
   component: RouteComponent,
@@ -39,7 +39,7 @@ function RouteComponent() {
             </div>
           </div>
           <div>
-            <ExecuteBlendButton />
+            <ConfirmBlendDialog />
           </div>
         </div>
       </div>
