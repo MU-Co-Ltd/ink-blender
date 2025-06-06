@@ -4,6 +4,7 @@ import { MAX_INK_COUNT, MAX_DROPS_COUNT } from '@/libs/constants'
 import { useStore } from '@nanostores/react'
 import { $selectedInks } from '@/features/blend/stores/SelectedInks'
 import { useColor } from './use-color'
+import { $blendedColorProperties } from '@/features/blend/stores/BlendedColorProperties'
 
 export function useBlender() {
   const selectedInks = useStore($selectedInks)
@@ -44,6 +45,20 @@ export function useBlender() {
    */
   function isSelected(test: TColor) {
     return selectedInks.some(({ color }) => color.name === test.name)
+  }
+
+  /**
+   * Reset the selected inks and blended color properties
+   */
+  function reset() {
+    // Reset selected inks
+    $selectedInks.set([])
+    // Reset blended color properties
+    $blendedColorProperties.set({ name: '' })
+    // Reset state flags
+    toggleIsSelectedMaxInks(false)
+    toggleIsSelectedMaxAmount(false)
+    setCanBlend(false)
   }
 
   function increaseInkAmount(target: TColor) {
@@ -144,6 +159,13 @@ export function useBlender() {
     return getHexFromRgb(blendedInkRed, blendedInkGreen, blendedInkBlue)
   }
 
+  /**
+   * Set the blended color name in the store
+   */
+  function setBlendedColorName(name: string) {
+    $blendedColorProperties.set({ name })
+  }
+
   useEffect(() => {
     updateState()
   }, [selectedInks])
@@ -158,6 +180,8 @@ export function useBlender() {
     isSelectedMaxAmount,
     isSelectedMaxInks,
     removeInk,
+    reset,
     selectedInks,
+    setBlendedColorName,
   }
 }

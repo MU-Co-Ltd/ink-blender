@@ -109,16 +109,14 @@ function RouteComponent() {
         </div>
         {/** @memo download button */}
         <div className="text-center mt-10">
-          <Link to="/" className="text-2xl underline-offset-4 hover:underline">
+          <Link
+            to="/"
+            className="inline-block py-3 px-10 text-xl rounded-md hover:underline hover:shadow hover:bg-white"
+          >
             TOPへ
           </Link>
         </div>
-        {/**
-         * @memo back to TOP
-         * @todo
-         *  - reset store
-         *  - confirm dialog
-         **/}
+        {/** @memo back to TOP */}
       </div>
     </div>
   )

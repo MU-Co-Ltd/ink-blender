@@ -18,7 +18,6 @@ import {
 import ResultFormSubmitButton from '@/features/blend/components/ResultFormSubmitButton'
 import TestDrawingDialog from '@/features/blend/components/TestDrawingDialog'
 import Canvas from '@/features/draw/components/Canvas'
-import { $blendedColorProperties } from '@/features/blend/stores/BlendedColorProperties'
 
 export const Route = createFileRoute('/blend/result/')({
   component: RouteComponent,
@@ -27,7 +26,7 @@ export const Route = createFileRoute('/blend/result/')({
 function RouteComponent() {
   const navigate = useNavigate()
   // ブレンドの状態を取得するためのカスタムフック
-  const { getBlendedInkHex } = useBlender()
+  const { getBlendedInkHex, setBlendedColorName } = useBlender()
   // ブレンドされたインクの色を取得
   const blendedInkColor = getBlendedInkHex()
   // フォームの初期化
@@ -38,7 +37,7 @@ function RouteComponent() {
   // フォームの送信処理
   const handleOnSubmit = ({ inkName }: BlendResultFormSchema) => {
     // フォームデータをstoreに保存する
-    $blendedColorProperties.set({ name: inkName })
+    setBlendedColorName(inkName)
     // 標本プレビューページへリダイレクト
     navigate({ to: '/blend/result/preview', replace: true })
   }
