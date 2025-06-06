@@ -13,18 +13,19 @@ function RouteLayoutComponent() {
           <Link to="/" className="inline-block">
             <AppLogo />
           </Link>
-          <ul className="flex gap-4">
-            <li>
-              <Link to="/blend">ブレンド</Link>
-            </li>
-            <li>
-              <Link to="/blend/result">結果</Link>
-            </li>
-            <li>
-              <Link to="/blend/result/preview">プレビュー</Link>
-            </li>
-          </ul>
-          {/* @todo Delete on production deploy */}
+          {import.meta.env.DEV && (
+            <ul className="flex gap-4">
+              <li>
+                <Link to="/blend">ブレンド</Link>
+              </li>
+              <li>
+                <Link to="/blend/result">結果</Link>
+              </li>
+              <li>
+                <Link to="/blend/result/preview">プレビュー</Link>
+              </li>
+            </ul>
+          )}
         </div>
       </header>
       <Outlet />

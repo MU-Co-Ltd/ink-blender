@@ -19,10 +19,10 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
             <p className="px-5 py-1.5 bg-theme-gray-primary text-theme-gray-tertiary text-xs rounded-br-2xl">
               <span className="text-base leading-none">{order}</span>色目
             </p>
-            <Button
-              variant="ghost"
-              className="text-theme-gray-primary bg-transparent"
+            <button
+              className="flex items-center justify-center size-8 rounded-full p-0 text-theme-gray-primary hover:text-theme-gray-tertiary bg-transparent cursor-pointer"
               onClick={() => removeInk(ink.color)}
+              title="選択した色を削除"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
                   d="M6 18 18 6M6 6l12 12"
                 />
               </svg>
-            </Button>
+            </button>
           </div>
           <div className="px-4">
             <picture>
@@ -53,7 +53,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
           </div>
           <div className="flex items-center justify-center gap-2.5 pb-3.5 px-4">
             <Button
-              className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0"
+              className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0 cursor-pointer hover:opacity-50 hover:bg-transparent"
               onClick={() => decreaseInkAmount(ink.color)}
             >
               <svg
@@ -75,7 +75,7 @@ export default function SelectedInkCard({ ink, order }: ComponentProps) {
               {ink.amount}
             </div>
             <Button
-              className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0"
+              className="size-10 p-0 flex items-center justify-center rounded-full bg-white border border-theme-gray-primary text-theme-gray-tertiary shrink-0 cursor-pointer hover:opacity-50 hover:bg-transparent"
               onClick={() => increaseInkAmount(ink.color)}
             >
               <svg

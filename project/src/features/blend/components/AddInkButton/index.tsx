@@ -6,7 +6,7 @@ import { useBlender } from '@/features/blend/hooks/use-blender'
 export default function AddInkButton() {
   const swiper = useSwiper()
   const { findColorByName } = useColor()
-  const { addInk, isSelectedMaxInks } = useBlender()
+  const { addInk, canBlend } = useBlender()
 
   const onClickHandler = () => {
     const activeSlide = swiper.slides[swiper.activeIndex]
@@ -22,9 +22,9 @@ export default function AddInkButton() {
 
   return (
     <Button
-      className="rounded py-1.5 px-24 border border-theme-gray-primary bg-white text-black hover:bg-white hover:text-black hover:opacity-80 cursor-pointer"
+      className="rounded py-1.5 px-24 border border-theme-gray-primary bg-white text-black hover:bg-white hover:text-black hover:opacity-50 cursor-pointer"
       onClick={onClickHandler}
-      disabled={isSelectedMaxInks}
+      disabled={canBlend}
     >
       この色を選ぶ
     </Button>

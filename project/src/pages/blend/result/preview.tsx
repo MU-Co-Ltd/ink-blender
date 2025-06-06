@@ -43,7 +43,7 @@ function RouteComponent() {
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-16 pt-16">
       <div className="max-w-3xl mx-auto">
         <PreviewCard ref={previewCardRef}>
           <div className="flex items-center gap-7">
@@ -103,21 +103,23 @@ function RouteComponent() {
         </PreviewCard>
       </div>
       {/** @memo preview card */}
-      <div className="max-w-sm mx-auto">
-        <DownloadCardButton onClick={handleDownload} />
+      <div>
+        <div className="max-w-sm mx-auto">
+          <DownloadCardButton onClick={handleDownload} />
+        </div>
+        {/** @memo download button */}
+        <div className="text-center mt-10">
+          <Link to="/" className="text-2xl underline-offset-4 hover:underline">
+            TOPへ
+          </Link>
+        </div>
+        {/**
+         * @memo back to TOP
+         * @todo
+         *  - reset store
+         *  - confirm dialog
+         **/}
       </div>
-      {/** @memo download button */}
-      <div className="text-center">
-        <Link to="/" className="text-2xl underline-offset-4 hover:underline">
-          TOPへ
-        </Link>
-      </div>
-      {/**
-       * @memo back to TOP
-       * @todo
-       *  - reset store
-       *  - confirm dialog
-       **/}
     </div>
   )
 }

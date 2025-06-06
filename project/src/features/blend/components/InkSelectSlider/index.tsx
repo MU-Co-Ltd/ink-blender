@@ -34,7 +34,7 @@ export default function InkSelectSlider() {
           <SwiperSlide key={color.name} data-color-name={color.name}>
             {({ isActive }) => (
               <div className="grid items-center justify-center gap-6 transition-all duration-300 ease-in-out">
-                <div className={isActive ? 'scale-110' : 'opacity-85'}>
+                <div className={isActive ? 'scale-115' : 'opacity-85'}>
                   <div className={isActive ? 'hidden' : 'block'}>
                     <picture>
                       <img
