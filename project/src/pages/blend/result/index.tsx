@@ -18,12 +18,17 @@ import {
 import ResultFormSubmitButton from '@/features/blend/components/ResultFormSubmitButton'
 import TestDrawingDialog from '@/features/blend/components/TestDrawingDialog'
 import Canvas from '@/features/draw/components/Canvas'
+import InkDropAnimation from '@/features/blend/components/InkDropAnimation'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/blend/result/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  // loadingフラグ
+  const [isBlending, toggleIsBlending] = useState(true)
+  // ナビゲーションを扱うためのフック
   const navigate = useNavigate()
   // ブレンドの状態を取得するためのカスタムフック
   const { getBlendedInkHex, setBlendedColorName } = useBlender()
@@ -40,6 +45,16 @@ function RouteComponent() {
     setBlendedColorName(inkName)
     // 標本プレビューページへリダイレクト
     navigate({ to: '/blend/result/preview', replace: true })
+  }
+  // ブレンド中のアニメーションを表示
+  if (isBlending) {
+    return (
+      <InkDropAnimation
+        duration={9000}
+        isVisible={isBlending}
+        onComplete={() => toggleIsBlending(false)}
+      />
+    )
   }
 
   return (
