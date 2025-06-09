@@ -19,7 +19,7 @@ function RouteComponent() {
   const { name: inkName } = useStore($blendedColorProperties)
   const blendedInkHex = getBlendedInkHex()
   const previewCardRef = useRef<HTMLDivElement>(null)
-
+  // ダウンロード
   const handleDownload = () => {
     if (!previewCardRef.current || !inkName || selectedInks.length === 0) {
       toast.error('画像のダウンロードに失敗しました。')
@@ -44,8 +44,8 @@ function RouteComponent() {
 
   return (
     <div className="space-y-16 pt-16">
-      <div className="max-w-3xl mx-auto">
-        <PreviewCard ref={previewCardRef}>
+      <div className="max-w-3xl mx-auto animate-in duration-1000 fade-in-0">
+        <PreviewCard ref={previewCardRef} enable3D={true}>
           <div className="flex items-center gap-7">
             <div className="flex flex-col items-center gap-2 basis-1/3 shrink-0">
               <div className="size-44 2xl:size-48">
