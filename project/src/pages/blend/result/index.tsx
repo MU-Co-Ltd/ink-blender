@@ -31,7 +31,7 @@ function RouteComponent() {
   // ナビゲーションを扱うためのフック
   const navigate = useNavigate()
   // ブレンドの状態を取得するためのカスタムフック
-  const { getBlendedInkHex, setBlendedColorName } = useBlender()
+  const { canBlend, getBlendedInkHex, setBlendedColorName } = useBlender()
   // ブレンドされたインクの色を取得
   const blendedInkColor = getBlendedInkHex()
   // フォームの初期化
@@ -47,7 +47,7 @@ function RouteComponent() {
     navigate({ to: '/blend/result/preview', replace: true })
   }
   // ブレンド中のアニメーションを表示
-  if (isBlending) {
+  if (isBlending && canBlend) {
     return (
       <InkDropAnimation
         duration={9000}
