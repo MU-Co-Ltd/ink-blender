@@ -4,12 +4,18 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow } from 'swiper/modules'
 import SliderNavButton from '../SliderNavButton'
 import { useBlender } from '@/features/blend/hooks/use-blender'
+import { useMemo } from 'react'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 
 export default function InkSelectSlider() {
   const { addInk } = useBlender()
+  
+  // ランダムな初期スライドのインデックスを生成
+  const initialSlideIndex = useMemo(() => {
+    return Math.floor(Math.random() * COLORS.length)
+  }, [])
 
   return (
     <div className="ink-slider">
@@ -18,6 +24,7 @@ export default function InkSelectSlider() {
         slidesPerView={3.5}
         centeredSlides
         loop
+        initialSlide={initialSlideIndex}
         modules={[EffectCoverflow]}
         speed={800}
         effect={'coverflow'}
