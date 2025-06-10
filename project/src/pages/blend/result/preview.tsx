@@ -7,7 +7,7 @@ import { generateFileName } from '@/libs/utils'
 import { useStore } from '@nanostores/react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import html2canvas from 'html2canvas-pro'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 export const Route = createFileRoute('/blend/result/preview')({
@@ -19,12 +19,18 @@ function RouteComponent() {
   const { name: inkName } = useStore($blendedColorProperties)
   const blendedInkHex = getBlendedInkHex()
   const previewCardRef = useRef<HTMLDivElement>(null)
+  const [downloadStatus, setDownloadStatus] = useState<
+    'idle' | 'downloading' | 'completed'
+  >('idle')
   // ダウンロード
   const handleDownload = () => {
     if (!previewCardRef.current || !inkName || selectedInks.length === 0) {
       toast.error('画像のダウンロードに失敗しました。')
       return
     }
+    let success = false
+    setDownloadStatus('downloading')
+    // 画像のダウンロード処理
     html2canvas(previewCardRef.current)
       .then((canvas) => {
         const fileName = generateFileName(inkName)
@@ -36,9 +42,18 @@ function RouteComponent() {
         link.download = fileName
         link.click()
         link.remove()
+        success = true
       })
       .catch((error) => {
         toast.error(error?.message)
+        setDownloadStatus('idle')
+      })
+      .finally(() => {
+        if (success) {
+          setDownloadStatus('completed')
+        } else {
+          setDownloadStatus('idle')
+        }
       })
   }
 
@@ -105,7 +120,10 @@ function RouteComponent() {
       {/** @memo preview card */}
       <div>
         <div className="max-w-sm mx-auto">
-          <DownloadCardButton onClick={handleDownload} />
+          <DownloadCardButton
+            onClick={handleDownload}
+            submitting={downloadStatus === 'downloading'}
+          />
         </div>
         {/** @memo download button */}
         <div className="text-center mt-10">
