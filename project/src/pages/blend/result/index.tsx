@@ -92,7 +92,12 @@ function RouteComponent() {
                 <FormItem className="max-w-prose mx-auto space-y-2">
                   <FormControl>
                     <div
-                      className={`relative z-1 flex justify-center border-b pb-3 ${fieldState.invalid ? 'border-theme-red-primary' : 'border-theme-gray-primary'}`}
+                      className={`relative z-1 flex justify-center border-b pb-3 transition-colors focus-within:border-b-2 focus-within:pb-[11px] ${fieldState.invalid ? 'border-theme-red-primary' : 'border-theme-gray-primary focus-within:border-[var(--border-color,theme(--color-theme-gray-primary))]'}`}
+                      style={
+                        {
+                          '--border-color': blendedInkColor,
+                        } as React.CSSProperties
+                      }
                     >
                       <input
                         type="text"
