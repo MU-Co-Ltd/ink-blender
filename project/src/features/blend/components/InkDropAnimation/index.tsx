@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useBlender } from '@/features/blend/hooks/use-blender'
 import { useStore } from '@nanostores/react'
 import { $selectedInks } from '@/features/blend/stores/SelectedInks'
+import type { TColor } from '@/types'
 
 interface InkDropAnimationProps {
   isVisible: boolean
@@ -21,7 +22,7 @@ export default function InkDropAnimation({
     'preparing' | 'dropping' | 'swirling' | 'mixing' | 'complete'
   >('preparing')
   const [droppedInks, setDroppedInks] = useState<
-    Array<{ color: string; x: number; y: number; delay: number }>
+    Array<{ color: TColor; x: number; y: number; delay: number }>
   >([])
 
   const finalColor = getBlendedInkHex()
@@ -34,19 +35,28 @@ export default function InkDropAnimation({
       return
     }
 
-    // インク滴の初期位置を計算
-    const drops: Array<{ color: string; x: number; y: number; delay: number }> =
+    // インク滴の初期位置を計算（ボトルの位置に合わせて配置）
+    const drops: Array<{ color: TColor; x: number; y: number; delay: number }> =
       []
+
+    // ボトルの配置位置を定義（CSS配置と対応）
+    const getBottlePosition = (inkIndex: number) => {
+      const positions = [
+        { x: 15, y: 15 }, // 1番目: 左上
+        { x: 85, y: 15 }, // 2番目: 右上
+        { x: 15, y: 85 }, // 3番目: 左下
+        { x: 85, y: 85 }, // 4番目: 右下
+      ]
+      return positions[inkIndex] || { x: 50, y: 20 }
+    }
+
     selectedInks.forEach((ink, inkIndex) => {
+      const bottlePos = getBottlePosition(inkIndex)
       for (let i = 0; i < ink.amount; i++) {
-        const angle = (360 / selectedInks.length) * inkIndex + i * 20
-        const radius = 80
-        const x = 50 + Math.cos((angle * Math.PI) / 180) * radius
-        const y = 50 + Math.sin((angle * Math.PI) / 180) * radius
         drops.push({
-          color: ink.color.hex,
-          x,
-          y,
+          color: ink.color,
+          x: bottlePos.x,
+          y: bottlePos.y,
           delay: inkIndex * 300 + i * 150,
         })
       }
@@ -96,7 +106,7 @@ export default function InkDropAnimation({
       case 'mixing':
         return '美しい色が生まれています...'
       case 'complete':
-        return 'ブレンド完了！'
+        return 'まもなく完成です！'
       default:
         return 'ブレンド中...'
     }
@@ -136,7 +146,7 @@ export default function InkDropAnimation({
                 0,
                 progress - (drop.delay / duration) * 100
               )
-              const isDropVisible = dropProgress > 0
+              const isDropVisible = dropProgress > 20
               const isDropping = dropProgress < 30
               const isSwirling = dropProgress >= 30 && dropProgress < 60
               const isMixing = dropProgress >= 60
@@ -146,24 +156,21 @@ export default function InkDropAnimation({
                   key={`drop-${index}`}
                   className="absolute transition-all duration-700 ease-out"
                   style={{
-                    width: isDropping ? '8px' : isSwirling ? '12px' : '16px',
+                    width: isDropping ? '12px' : isSwirling ? '12px' : '16px',
                     height: isDropping ? '12px' : isSwirling ? '12px' : '16px',
-                    backgroundColor: isMixing ? finalColor : drop.color,
-                    borderRadius: isDropping ? '50% 50% 50% 0' : '50%',
-                    top: isDropping ? '20%' : '50%',
+                    backgroundColor: isMixing ? finalColor : drop.color.hex,
+                    borderRadius:
+                      isDropVisible && isDropping
+                        ? '0% 100% 50% 50% / 0% 50% 50% 100%'
+                        : '50%',
+                    top: isDropping ? `${drop.y}%` : '50%',
                     left: isDropping ? `${drop.x}%` : '50%',
                     transform: `
-                    translate(-50%, -50%)
-                    ${
-                      isSwirling
-                        ? `
-                      rotate(${dropProgress * 6}deg)
-                      translateX(${30 - dropProgress * 0.5}px)
-                    `
-                        : ''
-                    }
-                    ${isMixing ? `scale(${1 - dropProgress * 0.01})` : ''}
-                  `,
+                      translate(-50%, -50%)
+                      ${isDropping ? 'rotate(45deg)' : ''}
+                      ${isSwirling ? `rotate(${dropProgress * 6}deg) translateX(${30 - dropProgress * 0.5}px)` : ''}
+                      ${isMixing ? `scale(${1 - dropProgress * 0.01})` : ''}
+                    `,
                     opacity: isDropVisible
                       ? isMixing && dropProgress > 80
                         ? 0
@@ -172,7 +179,7 @@ export default function InkDropAnimation({
                     transitionDelay: `${drop.delay}ms`,
                     zIndex: isDropping ? 10 : 5,
                     boxShadow: isDropping
-                      ? `0 2px 4px ${drop.color}40`
+                      ? `0 2px 4px ${drop.color.hex}40`
                       : 'none',
                   }}
                 />
@@ -227,26 +234,24 @@ export default function InkDropAnimation({
           </div>
 
           {/* インクボトルのシルエット */}
-          {currentPhase === 'preparing' && (
-            <div className="absolute inset-0">
-              {selectedInks.map(({ color }) => (
-                <div
-                  key={`bottle-${color.name}`}
-                  className="absolute odd:left-0 even:right-0 nth-[1]:top-0 nth-[2]:top-0 nth-[3]:bottom-0 nth-[4]:bottom-0 size-14 transition-all duration-1000"
-                  style={{
-                    transform: `translateY(${progress < 10 ? -20 : 0}px)`,
-                    opacity: progress < 10 ? 0.5 : 1,
-                  }}
-                >
-                  <img
-                    src={color.thumbnails.bottle}
-                    alt={color.name}
-                    className="size-full object-scale-down"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="absolute inset-0">
+            {selectedInks.map(({ color }) => (
+              <div
+                key={`bottle-${color.name}`}
+                className="absolute odd:left-0 even:right-0 nth-[1]:top-0 nth-[2]:top-0 nth-[3]:bottom-0 nth-[4]:bottom-0 size-14 transition-all duration-1000"
+                style={{
+                  transform: `translateY(${currentPhase === 'preparing' ? -20 : 0}px)`,
+                  opacity: currentPhase === 'preparing' ? 0 : 1,
+                }}
+              >
+                <img
+                  src={color.thumbnails.bottle}
+                  alt={color.name}
+                  className="size-full object-scale-down"
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* 選択されたインクの表示 */}
@@ -263,33 +268,6 @@ export default function InkDropAnimation({
               <span className="text-xs text-gray-600">×{amount}</span>
             </div>
           ))}
-          {currentPhase === 'complete' && (
-            <>
-              <div className="self-center text-gray-600">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                  />
-                </svg>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <div
-                  className="size-6 rounded-full border border-theme-gray-primary"
-                  style={{ backgroundColor: finalColor }}
-                />
-                <span className="text-xs text-gray-600 font-bold">完成</span>
-              </div>
-            </>
-          )}
         </div>
 
         {/* プログレスバー */}
