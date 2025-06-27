@@ -20,7 +20,6 @@ import TestDrawingDialog from '@/features/blend/components/TestDrawingDialog'
 import Canvas from '@/features/draw/components/Canvas'
 import InkDropAnimation from '@/features/blend/components/InkDropAnimation'
 import { useState } from 'react'
-import { Button } from '@/features/common/components/ui/button'
 
 export const Route = createFileRoute('/blend/result/')({
   component: RouteComponent,
