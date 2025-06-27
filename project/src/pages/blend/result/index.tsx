@@ -147,7 +147,7 @@ function RouteComponent() {
               )}
             />
             {/** @memo color name input */}
-            <div className="flex items-center gap-10">
+            <div className="flex items-center gap-10 max-w-3xl mx-auto">
               <div className="flex flex-col items-center basis-1/4 shrink-0">
                 <div className="relative z-1">
                   <div

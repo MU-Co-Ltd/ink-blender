@@ -1,6 +1,8 @@
 import { useStore } from '@nanostores/react'
 import { $selectedInks } from '@/features/blend/stores/SelectedInks'
 import BorderCard from '@/features/common/components/theme/BorderCard'
+import { MAX_INK_COUNT } from '@/libs/constants'
+import BlendPieChart from '@/features/blend/components/BlendPieChart'
 
 export default function RecipeCard() {
   const blendedInks = useStore($selectedInks)
@@ -12,23 +14,33 @@ export default function RecipeCard() {
           配合の詳細
         </p>
       </div>
-      <div className="flex justify-center gap-5 mt-6 px-5 pb-10">
-        {blendedInks.map(({ color, amount }) => (
-          <div key={color.name} className="space-y-2 basis-1/5">
-            <div>
-              <picture>
-                <img
-                  src={color.thumbnails.withSample}
-                  alt={color.name}
-                  width="120"
-                  height="103"
-                  className="w-full"
-                />
-              </picture>
-            </div>
-            <p className="text-xl text-center">{amount}</p>
-          </div>
-        ))}
+      <div className="pt-4 pb-6 px-5 flex gap-8">
+        <ul className="grid grid-cols-2 gap-1.5 grow">
+          {Array.from({ length: MAX_INK_COUNT }).map((_, index) => (
+            <li
+              key={index}
+              className="flex items-center justify-center gap-2.5 p-2.5 min-h-20 border border-theme-gray-primary rounded empty:border-dashed"
+            >
+              {blendedInks[index] && (
+                <>
+                  <div className="basis-16">
+                    <img
+                      src={blendedInks[index].color.thumbnails.withSample}
+                      alt={blendedInks[index].color.name}
+                    />
+                  </div>
+                  <p className="text-xl">{blendedInks[index].amount}</p>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+        {/** @memo blend result details */}
+        <div className="w-25 shrink-0 space-y-2">
+          <p className="text-theme-gray-tertiary text-center">ブレンド比率</p>
+          <BlendPieChart className="w-full" />
+        </div>
+        {/** @memo blend graph */}
       </div>
     </BorderCard>
   )
