@@ -53,7 +53,7 @@ export function useCanvas() {
         return
       }
       const distance = Math.hypot(end.x - start.x, end.y - start.y)
-      const maxLineWidth = 10
+      const maxLineWidth = 5
       const minLineWidth = 2
       const maxAlpha = 1
       const minAlpha = 0.2
