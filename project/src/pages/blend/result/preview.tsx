@@ -84,7 +84,7 @@ function RouteComponent() {
       <div className="space-y-16 pt-16">
         <div className="max-w-3xl mx-auto animate-in duration-1000 fade-in-0">
           <PreviewCard ref={previewCardRef} enable3D={true}>
-            <div className="flex items-center gap-7">
+            <div className="flex gap-7">
               <div className="flex flex-col items-center gap-2 basis-1/3 shrink-0">
                 <div className="size-44 2xl:size-48">
                   <ResultPaint color={blendedInkHex} />
@@ -119,22 +119,46 @@ function RouteComponent() {
                   </svg>
                 </div>
               </div>
-              <div className="grow space-y-5">
-                <p className="text-xl">No.001</p>
-                <h1 className="text-3xl">{inkName}</h1>
-                <div>
+              <div className="grow space-y-5 pt-4">
+                <h1 className="text-3xl leading-snug border-b border-theme-beige-primary pb-3">
+                  {inkName}
+                </h1>
+                <div className="space-y-3">
                   <p className="text-xl">使ったインク</p>
-                  <ul className="flex gap-2.5 mt-4">
-                    {selectedInks.map(({ color }) => (
-                      <li
-                        key={color.name}
-                        className="size-14 rounded-full"
-                        style={{ backgroundColor: color.hex }}
+                  <div className="flex items-center gap-2.5">
+                    {selectedInks.map((ink, index) => (
+                      <div
+                        key={ink.color.name}
+                        className="flex items-center gap-2.5"
                       >
-                        <span className="sr-only">{color.hex}</span>
-                      </li>
+                        <div className="flex flex-col items-center gap-2">
+                          <span
+                            className="size-15 rounded-full"
+                            style={{ backgroundColor: ink.color.hex }}
+                          />
+                          <span className="text-xl text-center">
+                            {ink.amount}
+                          </span>
+                        </div>
+                        {selectedInks.length - 1 !== index && (
+                          <div className="text-theme-beige-primary">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="27"
+                              height="26"
+                              viewBox="0 0 27 26"
+                              fill="none"
+                            >
+                              <path
+                                d="M25.035 11.6351H14.815V1.415C14.815 0.660866 14.2041 0.0500488 13.45 0.0500488C12.6959 0.0500488 12.085 0.660866 12.085 1.415V11.6351H1.86495C1.11082 11.6351 0.5 12.2459 0.5 13C0.5 13.7542 1.11082 14.365 1.86495 14.365H12.085V24.5851C12.085 25.3392 12.6959 25.95 13.45 25.95C14.2041 25.95 14.815 25.3392 14.815 24.5851V14.365H25.035C25.7892 14.365 26.4 13.7542 26.4 13C26.4 12.2459 25.7892 11.6351 25.035 11.6351Z"
+                                fill="currentColor"
+                              />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               </div>
             </div>
