@@ -1,13 +1,22 @@
+import { useBlender } from '@/features/blend/hooks/use-blender'
 import { Toaster } from '@/features/common/components/ui/sonner'
 import {
   PROJECT_NAME,
   PROJECT_DESCRIPTION,
   PROJECT_BASE_URL,
 } from '@/libs/constants'
-import { HeadContent, Outlet, createRootRoute } from '@tanstack/react-router'
+import {
+  HeadContent,
+  Outlet,
+  createRootRouteWithContext,
+} from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
-export const Route = createRootRoute({
+interface RouterContext {
+  blender: ReturnType<typeof useBlender>
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
   head: () => ({
     meta: [

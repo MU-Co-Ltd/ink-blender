@@ -1,6 +1,13 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/blend/result')({
+  beforeLoad: import.meta.env.PROD
+    ? async ({ context }) => {
+        if (!context.blender.canBlend) {
+          throw redirect({ to: '/blend' })
+        }
+      }
+    : undefined,
   component: RouteComponent,
 })
 
