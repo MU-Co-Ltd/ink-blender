@@ -148,11 +148,6 @@ export function useBlender() {
       !isValidRgbColorValue(blendedInkGreen) ||
       !isValidRgbColorValue(blendedInkBlue)
     ) {
-      console.error('Invalid blended ink color', {
-        blendedInkRed,
-        blendedInkGreen,
-        blendedInkBlue,
-      })
       return getHexFromRgb(0, 0, 0)
     }
 
