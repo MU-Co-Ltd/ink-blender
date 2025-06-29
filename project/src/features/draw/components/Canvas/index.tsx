@@ -88,7 +88,7 @@ export default function Canvas({
         ref={canvasElementRef}
       />
       <div
-        className="absolute top-1/3 size-fit pointer-events-none transition-transform -translate-y-3"
+        className="absolute z-10 top-1/3 size-fit pointer-events-none transition-transform -translate-y-3"
         ref={cursorImageRef}
       >
         <img

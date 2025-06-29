@@ -2,14 +2,19 @@ import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
 import { Pie } from 'react-chartjs-2'
 import { useStore } from '@nanostores/react'
 import { $selectedInks } from '@/features/blend/stores/SelectedInks'
+import { cn } from '@/libs/utils'
 
 ChartJS.register(ArcElement, Tooltip)
 
-export default function BlendPieChart() {
+interface ComponentProps {
+  className?: string
+}
+
+export default function BlendPieChart({ className }: ComponentProps) {
   const selectedInks = useStore($selectedInks)
 
   return (
-    <div className="w-24">
+    <div className={cn('w-24', className)}>
       {selectedInks.length === 0 ? (
         <div className="aspect-square rounded-full border border-dashed border-theme-gray-primary flex items-center justify-center">
           <p className="text-sm text-theme-gray-primary text-center">

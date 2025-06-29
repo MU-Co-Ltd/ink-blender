@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useBlender } from '@/features/blend/hooks/use-blender'
 import BlendResultBottle from '@/assets/blended-bottle.svg'
 import RecipeCard from '@/features/blend/components/RecipeCard'
@@ -146,7 +146,7 @@ function RouteComponent() {
               )}
             />
             {/** @memo color name input */}
-            <div className="flex items-center gap-10">
+            <div className="flex items-center gap-10 max-w-3xl mx-auto">
               <div className="flex flex-col items-center basis-1/4 shrink-0">
                 <div className="relative z-1">
                   <div
@@ -194,8 +194,28 @@ function RouteComponent() {
               </div>
             </div>
             {/** @memo blend details */}
-            <div className="max-w-sm mx-auto space-y-7">
-              <div>
+            <div className="space-y-7">
+              <div className="grid grid-cols-2 gap-5 max-w-xl mx-auto">
+                <Link
+                  to="/blend"
+                  className="w-full h-auto flex items-center justify-center gap-2 py-1.5 px-4 border-2 border-black rounded text-black hover:opacity-50"
+                >
+                  <span className="text-xl">ひとつ戻る</span>
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="15"
+                      viewBox="0 0 15 15"
+                      fill="none"
+                    >
+                      <path
+                        d="M12.8038 4.65704C11.768 3.61812 10.3168 2.97003 8.73306 2.97088H6.26579V0.515503L0.155937 6.73036H8.73306C9.29058 6.73121 9.77792 6.9511 10.1453 7.31505C10.5098 7.68268 10.7294 8.17002 10.7305 8.72754C10.7297 9.28507 10.5098 9.77241 10.1453 10.1398C9.77821 10.5043 9.29058 10.7239 8.73306 10.725H0V14.4845H8.73306C10.3168 14.4853 11.768 13.8373 12.8038 12.7983C13.8428 11.7625 14.4909 10.3113 14.49 8.72754C14.4909 7.14383 13.843 5.69257 12.8038 4.65676V4.65704Z"
+                        fill="black"
+                      />
+                    </svg>
+                  </span>
+                </Link>
                 <TestDrawingDialog>
                   <Canvas
                     width={800}
@@ -205,7 +225,7 @@ function RouteComponent() {
                   />
                 </TestDrawingDialog>
               </div>
-              <div>
+              <div className="max-w-sm mx-auto">
                 <ResultFormSubmitButton />
               </div>
             </div>

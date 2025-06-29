@@ -16,6 +16,7 @@
   --color-theme-red-primary: #ef0014;
   --color-theme-beige-primary: #dad6c1;
   --color-theme-beige-secondary: #ede4df;
+  --color-theme-beige-tertiary: #fffbeb;
   --color-theme-black-primary: #24140e;
 }
 
@@ -45,7 +46,7 @@
 }
 
 .ink-slider .swiper {
-  @apply pt-5;
+  @apply pt-5 xl:pt-7;
 
   .swiper-wrapper {
     @apply flex items-center;
